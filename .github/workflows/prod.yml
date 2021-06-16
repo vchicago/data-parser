@@ -24,7 +24,7 @@ jobs:
       - name: Upload SHA tagged image
         run: docker push kzdv/flight-parser:${GITHUB_SHA::6}
       - name: Set image to latest tag
-        run: docker tag kzdv/flight-parser:${GITHUB_SHA::6} kzdv/flight-praser:latest
+        run: docker tag kzdv/flight-parser:${GITHUB_SHA::6} kzdv/flight-parser:latest
       - name: Push latest Image
         run: docker push kzdv/flight-parser:latest
       - name: Deploy image to cluster
