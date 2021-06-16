@@ -101,7 +101,7 @@ func ProcessFlights() {
 	log.Debug(fmt.Sprintf("Processing %d flights", len(vatsimData.Flights)))
 
 	// Delete old flights
-	go database.DB.Where("updated_at < ?", time.Now().Add((time.Minute*5) * -1).Delete(&kzdvTypes.Flights{})
+	go database.DB.Where("updated_at < ?", time.Now().Add((time.Minute*5)*-1)).Delete(&kzdvTypes.Flights{})
 
 	for i := 0; i < len(vatsimData.Flights); i++ {
 		go func(id int) {
