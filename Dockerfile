@@ -4,7 +4,7 @@ COPY go.mod .
 COPY go.sum .
 RUN go mod download
 COPY . .
-RUN CGO_ENABLED=0 GOOS_linux go build -a -o app .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -o app .
 
 FROM alpine:latest
 COPY ./boundaries.json /app
