@@ -20,6 +20,8 @@ github.com/kzdv/types v0.0.0-20210616023355-c696615528ce h1:SPuNiq1mlNoO3K7kiMJa
 github.com/kzdv/types v0.0.0-20210616023355-c696615528ce/go.mod h1:KCVtHpRxBldhoguu9pDby3iQ+hmvOsPNB1tE4h7d7nk=
 github.com/robfig/cron/v3 v3.0.1 h1:WdRxkvbJztn8LMz/QEvLN5sBU+xKpSqwwUO1Pjr4qDs=
 github.com/robfig/cron/v3 v3.0.1/go.mod h1:eQICP3HwyT7UooqI/z+Ov+PtYAWygg1TEWWzGIFLtro=
+github.com/vchicago/types v0.0.0-20210709231223-a06cfc3fa3d4 h1:irEIJnkaPWQnZoeLUCkOpC0XJkypZAqIXPEo+fBPkbM=
+github.com/vchicago/types v0.0.0-20210709231223-a06cfc3fa3d4/go.mod h1:n13UVTFIkREf2gnCH7RL7pUcVbTgfmiCyhUxh3v0arA=
 gorm.io/driver/mysql v1.1.0 h1:3PgFPJlFq5Xt/0WRiRjxIVaXjeHY+2TQ5feXgpSpEC4=
 gorm.io/driver/mysql v1.1.0/go.mod h1:KdrTanmfLPPyAOeYGyG+UpDys7/7eeWT1zCq+oekYnU=
 gorm.io/gorm v1.21.9/go.mod h1:F+OptMscr0P2F2qU97WT1WimdH9GaQPoDW7AYd5i2Y0=

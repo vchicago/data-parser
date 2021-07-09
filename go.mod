@@ -1,4 +1,4 @@
-module github.com/kzdv/flight-parse
+module github.com/vchicago/flight-parse
 
 go 1.16
 
@@ -8,6 +8,7 @@ require (
 	github.com/joho/godotenv v1.3.0
 	github.com/kzdv/types v0.0.0-20210616023355-c696615528ce
 	github.com/robfig/cron/v3 v3.0.1
+	github.com/vchicago/types v0.0.0-20210709231223-a06cfc3fa3d4 // indirect
 	gorm.io/driver/mysql v1.1.0
 	gorm.io/gorm v1.21.11
 )

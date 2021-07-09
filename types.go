@@ -1,6 +1,6 @@
 package main
 
-import "github.com/kzdv/flight-parse/geo"
+import "github.com/vchicago/flight-parse/geo"
 
 type Facility struct {
 	ID       string      `json:"id"`

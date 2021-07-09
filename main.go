@@ -12,10 +12,10 @@ import (
 	"github.com/common-nighthawk/go-figure"
 	"github.com/dhawton/log4g"
 	"github.com/joho/godotenv"
-	"github.com/kzdv/flight-parse/database"
-	"github.com/kzdv/flight-parse/geo"
-	kzdvTypes "github.com/kzdv/types/database"
 	"github.com/robfig/cron/v3"
+	"github.com/vchicago/flight-parse/database"
+	"github.com/vchicago/flight-parse/geo"
+	kzdvTypes "github.com/vchicago/types/database"
 	"gorm.io/gorm"
 )
 
