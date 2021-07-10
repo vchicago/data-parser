@@ -24,7 +24,7 @@ var fac []Facility
 var log = log4g.Category("main")
 
 func main() {
-	intro := figure.NewFigure("ZDV FP", "", false).Slicify()
+	intro := figure.NewFigure("ZAU FP", "", false).Slicify()
 	for i := 0; i < len(intro); i++ {
 		log.Info(intro[i])
 	}
@@ -62,7 +62,7 @@ func main() {
 	}
 
 	log.Info("Connecting to database and handling migrations")
-	database.Connect(Getenv("DB_USERNAME", "root"), Getenv("DB_PASSWORD", "secret"), Getenv("DB_HOSTNAME", "localhost"), Getenv("DB_PORT", "3306"), Getenv("DB_DATABASE", "zdv"))
+	database.Connect(Getenv("DB_USERNAME", "root"), Getenv("DB_PASSWORD", "secret"), Getenv("DB_HOSTNAME", "localhost"), Getenv("DB_PORT", "3306"), Getenv("DB_DATABASE", "zau"))
 
 	log.Info("Running first time...")
 	ProcessFlights()
