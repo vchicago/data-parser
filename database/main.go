@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/dhawton/log4g"
-	kzdvTypes "github.com/kzdv/types/database"
+	dbTypes "github.com/vchicago/types/database"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -49,7 +49,7 @@ func Connect(user string, pass string, hostname string, port string, database st
 		panic("Max attempts occured. Aborting startup.")
 	}
 
-	db.AutoMigrate(&kzdvTypes.Flights{})
+	db.AutoMigrate(&dbTypes.Flights{}, &dbTypes.OnlineControllers{})
 
 	DB = db
 }

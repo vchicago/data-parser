@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/common-nighthawk/go-figure"
@@ -15,16 +16,18 @@ import (
 	"github.com/robfig/cron/v3"
 	"github.com/vchicago/flight-parse/database"
 	"github.com/vchicago/flight-parse/geo"
-	kzdvTypes "github.com/vchicago/types/database"
+	dbTypes "github.com/vchicago/types/database"
 	"gorm.io/gorm"
 )
 
 var facilities map[string]geo.Polygon
 var fac []Facility
+var positions []string
+var num_positions int
 var log = log4g.Category("main")
 
 func main() {
-	intro := figure.NewFigure("ZAU FP", "", false).Slicify()
+	intro := figure.NewFigure("ZAU Parser", "", false).Slicify()
 	for i := 0; i < len(intro); i++ {
 		log.Info(intro[i])
 	}
@@ -61,15 +64,30 @@ func main() {
 		fac[i].Polygon = geo.Polygon{Points: points}
 	}
 
+	log.Info("Loading positions...")
+	jsonfile, err = os.Open("positions.json")
+	if err != nil {
+		log.Fatal(fmt.Sprintf("Failed to open positions.json: %s\n", err.Error()))
+	}
+
+	data, err = ioutil.ReadAll(jsonfile)
+	defer jsonfile.Close()
+
+	if err := json.Unmarshal(data, &positions); err != nil {
+		log.Fatal(fmt.Sprintf("Failed to unmarshal positions: %s\n", err.Error()))
+	}
+	num_positions = len(positions)
+	log.Debug(fmt.Sprintf("Number of positions: %d, positions: %v", num_positions, positions))
+
 	log.Info("Connecting to database and handling migrations")
 	database.Connect(Getenv("DB_USERNAME", "root"), Getenv("DB_PASSWORD", "secret"), Getenv("DB_HOSTNAME", "localhost"), Getenv("DB_PORT", "3306"), Getenv("DB_DATABASE", "zau"))
 
 	log.Info("Running first time...")
-	ProcessFlights()
+	GetData()
 
 	log.Info("Creating cron job...")
 	jobs := cron.New()
-	jobs.AddFunc("@every 2m", ProcessFlights)
+	jobs.AddFunc("@every 2m", GetData)
 
 	jobs.Start()
 
@@ -78,7 +96,7 @@ func main() {
 	}
 }
 
-func ProcessFlights() {
+func GetData() {
 	url := "https://data.vatsim.net/v3/vatsim-data.json"
 	resp, err := http.Get(url)
 	if err != nil {
@@ -98,15 +116,48 @@ func ProcessFlights() {
 		return
 	}
 
-	log.Debug(fmt.Sprintf("Processing %d flights", len(vatsimData.Flights)))
+	ProcessFlights(vatsimData.Flights)
+	ProcessControllers(vatsimData.Controllers)
+}
 
-	// Delete old flights
-	go database.DB.Where("updated_at < ?", time.Now().Add((time.Minute*5)*-1)).Delete(&kzdvTypes.Flights{})
+func ProcessControllers(controllers []VATSIMController) {
+	go database.DB.Where("updated_at < ?", time.Now().Add((time.Minute*5)*-1)).Delete(&dbTypes.OnlineControllers{})
+	for i := 0; i < len(controllers); i++ {
+		go func(controller VATSIMController) {
+			for j := 0; j < num_positions; j++ {
+				if strings.HasPrefix(controller.Callsign, positions[j]) {
+					c := dbTypes.OnlineControllers{}
+					if err := database.DB.Where("callsign = ?", controller.Callsign).First(&c).Error; err != nil {
+						if !errors.Is(err, gorm.ErrRecordNotFound) {
+							log.Error(fmt.Sprintf("Error looking up online controller %s, %s\n", controller.Callsign, err.Error()))
+							break
+						}
+					}
 
-	for i := 0; i < len(vatsimData.Flights); i++ {
+					c.CID = controller.CID
+					c.Name = controller.Name
+					c.Callsign = controller.Callsign
+					c.Facility = "ZAU"
+					c.Frequency = controller.Frequency
+					c.LogonTime = controller.LogonTime
+
+					if err := database.DB.Save(&c).Error; err != nil {
+						log.Error(fmt.Sprintf("Error saving online controller info %s to database: %s\n", controller.Callsign, err.Error()))
+					}
+					break
+				}
+			}
+		}(controllers[i])
+	}
+}
+
+func ProcessFlights(flights []VATSIMFlight) {
+	go database.DB.Where("updated_at < ?", time.Now().Add((time.Minute*5)*-1)).Delete(&dbTypes.Flights{})
+
+	for i := 0; i < len(flights); i++ {
 		go func(id int) {
-			flight := vatsimData.Flights[id]
-			f := kzdvTypes.Flights{}
+			flight := flights[id]
+			f := dbTypes.Flights{}
 			if err := database.DB.Where("callsign = ?", flight.Callsign).First(&f).Error; err != nil {
 				if !errors.Is(err, gorm.ErrRecordNotFound) {
 					log.Error("Error looking up flight callsign " + flight.Callsign + ", " + err.Error())
@@ -117,6 +168,7 @@ func ProcessFlights() {
 			f.Aircraft = flight.FlightPlan.Aircraft
 			f.CID = flight.CID
 			f.Callsign = flight.Callsign
+			f.Name = flight.Name
 			f.Latitude = float32(flight.Latitude)
 			f.Longitude = float32(flight.Longitude)
 			f.Altitude = flight.Altitude
