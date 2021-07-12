@@ -2,6 +2,8 @@ github.com/common-nighthawk/go-figure v0.0.0-20210622060536-734e95fb86be h1:J5BL
 github.com/common-nighthawk/go-figure v0.0.0-20210622060536-734e95fb86be/go.mod h1:mk5IQ+Y0ZeO87b858TlA645sVcEcbiX6YqP98kt+7+w=
 github.com/dhawton/log4g v0.99.2 h1:1s+Z3D8sMGfxq5EZzU7meHW0uqFC6LXaIwiCWz6pRCQ=
 github.com/dhawton/log4g v0.99.2/go.mod h1:YVfgLeiC2HNBBggPpIYoP+SjPy50yXDEzf/5XHjJc1Y=
+github.com/dhawton/log4g v0.99.3 h1:KDfZOY2W5VBzMSeUi8YJpBVsw5FfBs3D9PVQQc+aTSY=
+github.com/dhawton/log4g v0.99.3/go.mod h1:YVfgLeiC2HNBBggPpIYoP+SjPy50yXDEzf/5XHjJc1Y=
 github.com/go-sql-driver/mysql v1.6.0 h1:BCTh4TKNUYmOmMUcQ3IipzF5prigylS7XXjEkfCHuOE=
 github.com/go-sql-driver/mysql v1.6.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=
 github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD/E=
@@ -16,6 +18,8 @@ github.com/vchicago/types v0.0.0-20210711005403-697c826dfc9e h1:PqUvMfxZdDKFKpA8
 github.com/vchicago/types v0.0.0-20210711005403-697c826dfc9e/go.mod h1:n13UVTFIkREf2gnCH7RL7pUcVbTgfmiCyhUxh3v0arA=
 github.com/vchicago/types v0.0.0-20210711012418-bc8f80425ee6 h1:lV6P+JRHRbXjKxGwijBp3tvkkfmPNhWtX/8W1mF0pUo=
 github.com/vchicago/types v0.0.0-20210711012418-bc8f80425ee6/go.mod h1:n13UVTFIkREf2gnCH7RL7pUcVbTgfmiCyhUxh3v0arA=
+github.com/vchicago/types v0.0.0-20210712025007-28a82fd67544 h1:ANzmQZBkZAcMw5P5iNT7kTr9IZuqreJAq4fS7cFeSFI=
+github.com/vchicago/types v0.0.0-20210712025007-28a82fd67544/go.mod h1:n13UVTFIkREf2gnCH7RL7pUcVbTgfmiCyhUxh3v0arA=
 gorm.io/driver/mysql v1.1.1 h1:yr1bpyqiwuSPJ4aGGUX9nu46RHXlF8RASQVb1QQNcvo=
 gorm.io/driver/mysql v1.1.1/go.mod h1:KdrTanmfLPPyAOeYGyG+UpDys7/7eeWT1zCq+oekYnU=
 gorm.io/gorm v1.21.9/go.mod h1:F+OptMscr0P2F2qU97WT1WimdH9GaQPoDW7AYd5i2Y0=
