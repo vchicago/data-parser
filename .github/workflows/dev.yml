@@ -16,7 +16,7 @@ jobs:
         id: prep
         run: |
           DOCKER_IMAGE=vzau/data-parser
-          VERSION=dev
+          VERSION=$(git rev-parse --short "$GITHUB_SHA")
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/v}
           fi
@@ -41,14 +41,12 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.prep.outputs.tags }}
       - name: Deploy image to cluster
-        if: ${{ github.event_name != 'push' }}
         uses: actions-hub/kubectl@master
         env:
           KUBE_CONFIG: ${{ secrets.KUBECTL }}
         with:
           args: set image deployment/data-parser data-parser=vzau/data-parser:${{ steps.prep.outputs.tags }} -n dev
       - name: Verify deployment
-        if: ${{ github.event_name != 'push' }}
         uses: actions-hub/kubectl@master
         with:
           args: rollout status deployment/data-parser -n dev
