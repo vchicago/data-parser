@@ -14,9 +14,9 @@ import (
 	"github.com/dhawton/log4g"
 	"github.com/joho/godotenv"
 	"github.com/robfig/cron/v3"
-	"github.com/vchicago/flight-parse/database"
-	"github.com/vchicago/flight-parse/geo"
-	dbTypes "github.com/vchicago/types/database"
+	"github.com/vzau/flight-parse/database"
+	"github.com/vzau/flight-parse/geo"
+	dbTypes "github.com/vzau/types/database"
 	"gorm.io/gorm"
 )
 

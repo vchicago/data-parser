@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 
-	"github.com/vchicago/flight-parse/geo"
+	"github.com/vzau/flight-parse/geo"
 )
 
 type Facility struct {

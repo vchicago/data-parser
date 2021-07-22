@@ -15,7 +15,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=vchicago/data-parser
+          DOCKER_IMAGE=vzau/data-parser
           VERSION=dev
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/v}
@@ -46,7 +46,7 @@ jobs:
         env:
           KUBE_CONFIG: ${{ secrets.KUBECTL }}
         with:
-          args: set image deployment/data-parser data-parser=vchicago/data-parser:${{ steps.prep.outputs.tags }} -n dev
+          args: set image deployment/data-parser data-parser=vzau/data-parser:${{ steps.prep.outputs.tags }} -n dev
       - name: Verify deployment
         if: ${{ github.event_name != 'push' }}
         uses: actions-hub/kubectl@master
