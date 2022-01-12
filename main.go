@@ -125,7 +125,7 @@ func ProcessControllers(controllers []VATSIMController) {
 	for i := 0; i < len(controllers); i++ {
 		go func(controller VATSIMController) {
 			for j := 0; j < num_positions; j++ {
-				if strings.HasPrefix(controller.Callsign, positions[j]) {
+				if strings.HasPrefix(controller.Callsign, fmt.Sprintf("%s_", positions[j])) {
 					c := dbTypes.OnlineControllers{}
 					if err := database.DB.Where("callsign = ?", controller.Callsign).First(&c).Error; err != nil {
 						if !errors.Is(err, gorm.ErrRecordNotFound) {

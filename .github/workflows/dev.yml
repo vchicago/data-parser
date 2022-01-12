@@ -47,9 +47,9 @@ jobs:
         env:
           KUBE_CONFIG: ${{ secrets.KUBECTL }}
         with:
-          args: set image deployment/data-parser data-parser=vzau/data-parser:${{ steps.prep.outputs.version }} -n dev
+          args: set image deployment/data-parser data-parser=vzau/data-parser:${{ steps.prep.outputs.version }} -n zau-dev
       - name: Verify deployment
         if: ${{ github.event_name != 'pull_request' }}
         uses: actions-hub/kubectl@master
         with:
-          args: rollout status deployment/data-parser -n dev
+          args: rollout status deployment/data-parser -n zau-dev
